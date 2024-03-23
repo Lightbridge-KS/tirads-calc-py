@@ -1,0 +1,20 @@
+---
+title: "Testing"
+format: html
+---
+
+```{r setup, include=FALSE}
+here::i_am("dev/testing.qmd")
+library(here)
+source("dev/R/tirads.R")
+```
+
+## R version
+
+```{r}
+get_tirads_points(
+    composition = "cystic", 
+    echogenicity = "an", shape = "wider", margin = "smooth",
+    echogenic_foci = "none"
+)
+```

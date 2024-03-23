@@ -1,0 +1,103 @@
+from ._points import get_tirads_points
+from ._levels import get_tirads_levels
+from ._check import args_check_tirads
+from ._utils import dict_to_bullet, yes_no
+from .map import tirads_map_desc
+
+class TIRADSReport:
+    def __init__(self, composition, echogenicity, shape, margin, echogenic_foci, size_cm=None):
+        # Validate inputs
+        args_check_tirads(composition, echogenicity, shape, margin, echogenic_foci)
+        pt = get_tirads_points(composition, echogenicity, shape, margin, echogenic_foci)
+        lv = get_tirads_levels(composition, echogenicity, shape, margin, echogenic_foci)
+        pt_tot = pt["points_tot"]
+        # FNA logic
+        if pt["points_tot"] < 3: # TR1 or TR2
+            should_fna = False
+            should_follow = False
+        else: # TR3 or more
+            should_fna = ((pt_tot == 3 and size_cm >= 2.5) or
+                        (4 <= pt_tot <= 6 and size_cm >= 1.5) or
+                        (pt_tot >= 7 and size_cm >= 1)) if size_cm is not None else "?"
+
+            # Follow-up logic
+            should_follow = ((pt_tot == 3 and size_cm >= 1.5) or
+                            (4 <= pt_tot <= 6 and size_cm >= 1) or
+                            (pt_tot >= 7 and size_cm >= 0.5)) if size_cm is not None else "?"
+        
+        desc = {}
+        for category, selection in pt["categories"].items():
+            if category == "echogenic_foci":
+                ls = [tirads_map_desc[category][x] for x in selection]
+                desc[category] = ", ".join(ls) 
+            else:
+                desc[category] = tirads_map_desc[category][selection]
+        
+        
+        self.pt = pt
+        self.lv = lv
+        self.desc = desc
+        self.should_fna = should_fna
+        self.should_follow = should_follow
+        
+        
+    # Pretty Printing 
+    def __str__(self):
+        report_str = f"-- TIRADS Report --\n\n" \
+                     f"Level: {self.lv['tr']} ({self.lv['desc']})\n" \
+                     f"Total Points: {self.pt['points_tot']}\n\n" \
+                     f"Points by Category:\n" \
+                     f"{dict_to_bullet(self.pt['points'])}\n\n" \
+                     f"Description:\n" \
+                     f"{dict_to_bullet(self.desc)}\n\n" \
+                     f"Suggested Actions:\n" \
+                     f"- FNA: {self.should_fna}\n" \
+                     f"- Follow-up: {self.should_follow}"
+        return report_str
+    
+    # Markdown (Summary)
+    def to_md_str_summary(self):
+        md_str = f"# TIRADS = `{self.lv['tr']}` ({self.lv['desc']})\n" \
+                 f"### **Total Points:** {self.pt['points_tot']}\n\n"
+        return md_str
+    
+    # Markdown (Actions)
+    def to_md_str_actions(self):
+        pt_tot = self.pt["points_tot"]
+    
+        if (self.should_fna == "?" or self.should_follow == "?") and pt_tot >= 3:
+            # Not
+            if pt_tot >= 7: # TR5
+                fna = "if ≥ 1 cm"
+                follow = "if ≥ 0.5 cm"
+            elif pt_tot >= 4: # TR4
+                fna = "if ≥ 1.5 cm"
+                follow = "if ≥ 1 cm"
+            elif pt_tot == 3: # TR3
+                fna = "if ≥ 2.5 cm"
+                follow = "if ≥ 1.5 cm"
+        else:
+            fna = yes_no(self.should_fna)
+            follow = yes_no(self.should_follow)
+            
+        md_str = f"### Suggested Actions:\n" \
+                 f"- FNA: {fna}\n" \
+                 f"- Follow-up: {follow}"
+                 
+        return md_str
+    
+    # Points as DataFrame
+    def get_points_df(self):
+        import pandas as pd
+        
+        df1 = pd.DataFrame({
+            "Categories": [k.capitalize().replace("_", " ") for k in tirads_map_desc.keys()],
+            "Points": self.desc.values()
+        })
+        df2 = df1.copy()
+        df2.loc[len(df1)] = ["Total", self.pt["points_tot"]]
+        
+        return df2
+        
+if __name__ == "__main__":
+    pass

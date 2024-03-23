@@ -1,0 +1,241 @@
+---
+title: "ACR TI-RADS Calculator"
+subtitle: "A Calculator for Thyroid Imaging Reporting & Data System <img src='images/cover.png' align='right' height='90'/>"
+title-block-banner: true
+author: "Kittipos Sirivongrungson"
+date: today
+theme: flatly
+toc: true
+css: "css/style.css"
+format: 
+  html:
+    code-tools: 
+      source: https://github.com/Lightbridge-KS/tirads-calc-py 
+include-in-header: assets/header.html
+number-sections: false
+server: shiny
+bibliography: assets/references.bib
+csl: assets/elsevier-with-titles.csl
+---
+
+
+```{python setup-pkg}
+#| include: false
+from shiny import render, reactive, req
+from shiny.express import input, ui
+import pandas as pd
+
+from tirads import TIRADSReport, tirads_map_desc
+```
+
+```{python setup-opt}
+#| include: false
+width_choices = "400px"
+```
+
+
+
+::: callout-note
+### About
+
+This calculator was implemented from [ACR TI-RADS™](https://www.acr.org/Clinical-Resources/Reporting-and-Data-Systems/TI-RADS) for thyroid ultrasound.
+:::
+
+::: {.callout-tip collapse=true}
+### Expand to see TI-RADS Charts
+
+This calculator was implemented using the following [@fig-tirads-chart] algorithm.
+
+![ACR TI-RADS Chart to determine TI-RADS Level and Suggestions [@ACR-TIRADS-WhitePaper]](images/tirads-chart.png){#fig-tirads-chart width="100%"}
+:::
+
+
+## Categories
+
+Select your option from "✅" tab or see example images from "🏞" tab.
+
+### Composition
+
+::: {.panel-tabset}
+#### ✅
+
+```{python}
+ui.input_radio_buttons(  
+        "composition",  
+        "Choose one:",  
+        tirads_map_desc["composition"],
+        width = width_choices
+) 
+```
+
+#### 🏞
+
+![**Composition** [@RadAssist]](./images/composition.png){#fig-composition width="100%"}
+
+- **Spongiform:** aggregation of multiple microcystic components ≥ 50% of the volume of the nodule [@ACR-TIRADS-Lexicon].
+
+:::
+
+
+### Echogenicity
+
+::: {.panel-tabset}
+#### ✅
+
+```{python}
+ui.input_radio_buttons(  
+        "echogenicity",  
+        "Choose one:",  
+        tirads_map_desc["echogenicity"],
+        width = width_choices
+) 
+```
+
+#### 🏞
+
+![**Echogenicity** [@RadAssist; @RadKey-ThyroidCyst]](./images/echogenicity.png){#fig-echogenicity width="100%"}
+
+- **Hyper/iso/hypoechoic:** relative to surrounding *thyroid tissue* [@ACR-TIRADS-Lexicon].
+  
+- **Very hypoechoic:** hypoechoic relative to adjacent *neck musculature* [@ACR-TIRADS-Lexicon].
+
+:::
+
+
+### Shape
+
+::: {.panel-tabset}
+#### ✅
+
+```{python}
+ui.input_radio_buttons(  
+        "shape",  
+        "Choose one:",  
+        tirads_map_desc["shape"],
+        width = width_choices
+) 
+```
+
+#### 🏞
+
+![**Shape: taller-than-wide** [@ACR-TIRADS-Lexicon]](./images/shape.png){#fig-shape width="100%"}
+
+- **taller-than-wide:** ratio of `AP / horizontal diameter > 1` when measured in the transverse plane [@ACR-TIRADS-Lexicon].
+
+:::
+
+### Margin {#sec-margin}
+
+::: {.panel-tabset}
+#### ✅
+
+```{python}
+ui.input_radio_buttons(  
+        "margin",  
+        "Choose one:",  
+        tirads_map_desc["margin"],
+        width = width_choices
+) 
+```
+
+#### 🏞
+
+![**Margin** [@ACR-TIRADS-Lexicon; @ACR-TIRADS-UserGuide; @RadAssist]](./images/margin.png){#fig-margin width="100%"} 
+
+**Definition** [@ACR-TIRADS-Lexicon]
+
+- **Smooth:** uninterrupted, well-defined, curvilinear edge typically forming a spherical or elliptical shape.
+
+- **Irregular margin:** spiculated, jagged, or with sharp angles with or without clear soft tissue protrusions into the parenchyma.
+
+- **Lobulated:** border has focal rounded soft tissue protrusions that extend into the adjacent parenchyma.
+
+- **Ill-defined:** border of the nodule is difficult to distinguish from thyroid parenchyma; the nodule lacks irregular or lobulated margins.
+
+- **Extrathyroidal extension:** nodule extends through the thyroid capsule.
+
+:::
+
+
+
+### Echogenic foci
+
+::: {.panel-tabset}
+#### ✅
+
+```{python}
+ui.input_checkbox_group(  
+    "echogenic_foci",  
+    "Choose All That Apply",  
+    tirads_map_desc["echogenic_foci"],
+    width = width_choices
+)  
+```
+
+#### 🏞
+
+![**Echogenic foci** [@ACR-TIRADS-Lexicon; @RadAssist]](./images/echogenic-foci.png){#fig-echogenic-foci width="100%"}
+
+**Definition** [@ACR-TIRADS-Lexicon; @ACR-TIRADS-WhitePaper]
+
+-   **Large comet-tail artifacts:** echogenic foci with *V-shaped echoes* > 1 mm deep to them. They are associated with colloid and are strongly indicative of benignity when found within the cystic components of thyroid nodules.
+
+-   **Macrocalcifications:** coarse echogenic foci accompanied by **_acoustic shadowing_**. Published data shows a weakly positive relationship with malignancy.
+
+-   **Peripheral (rim) calcifications:** lie along all or part of a nodule’s margin. Publications suggest that they are more strongly associated with malignancy than macrocalcifications. *Interrupted* peripheral calcifications qualifies as a *lobulated* margin (see [@sec-margin]).
+
+-   **Punctate echogenic foci:** “Dot-like” foci smaller than macrocalcifications and are **_nonshadowing_**. In the solid components of thyroid nodules, they may correspond to the psammomatous calcifications associated with papillary cancers; therefore, considered *highly suspicious*.
+
+:::
+
+### Size (cm)
+
+```{python}
+ui.input_numeric("size_cm", None, value=None, min=0)
+```
+
+::: {.callout-tip collapse="true"}
+#### How to measure size ?
+
+The nodule should be measured using **maximal diameter** in longitudinal, AP, or transverse plane [@ACR-TIRADS-Lexicon].
+:::
+
+
+
+## Results
+
+
+```{python}
+@reactive.calc
+def tirads_results():
+    req(input.echogenic_foci())
+    res = TIRADSReport(
+        composition=input.composition(), 
+        echogenicity=input.echogenicity(), 
+        shape=input.shape(), 
+        margin=input.margin(), 
+        echogenic_foci= input.echogenic_foci(), 
+        size_cm=input.size_cm())
+    return res
+```
+
+```{python}
+@render.ui
+def render_md_summary():
+    return ui.markdown(tirads_results().to_md_str_summary())
+```
+
+
+```{python}
+@render.data_frame  
+def output_df():
+    df = tirads_results().get_points_df()
+    return render.DataGrid(df)  
+```
+
+
+```{python}
+@render.ui
+def render_md_actions():
+    return ui.markdown(tirads_results().to_md_str_actions())
+```
