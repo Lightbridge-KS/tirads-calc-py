@@ -34,6 +34,20 @@ width_choices = "400px"
 ```
 
 
+<!-- {{< include tirads-q/_utils.qmd >}}
+
+
+{{< include tirads-q/_map.qmd >}}
+
+
+{{< include tirads-q/_check.qmd >}}
+
+
+{{< include tirads-q/_points_levels.qmd >}}
+
+
+{{< include tirads-q/_report.qmd >}} -->
+
 
 ::: callout-note
 ### About
