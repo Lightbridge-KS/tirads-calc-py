@@ -6,7 +6,7 @@
 ---
 
 
-**App link:** [**`TIRADS Calculator App`**](https://kittipos-sir.shinyapps.io/tirads-calculator)
+**App link:** [**TIRADS Calculator App**](https://kittipos-sir.shinyapps.io/tirads-calculator)
 
 ---
 
