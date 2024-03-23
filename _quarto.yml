@@ -1,0 +1,4 @@
+project:
+  #output-dir: # _build
+  render: 
+    - "tirads-calc.qmd"
