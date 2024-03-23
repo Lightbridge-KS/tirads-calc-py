@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 
 .DS_Store
+.Rhistory
+
 # C extensions
 *.so
 
@@ -161,3 +163,4 @@ cython_debug/
 #.idea/
 
 /.quarto/
+.Rproj.user

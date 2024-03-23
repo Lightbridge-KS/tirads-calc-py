@@ -1,0 +1,8 @@
+_dev
+.quarto
+.Rproj.user
+.venv
+tirads-q
+.gitignore
+.Rhistory
+tirads-calc-py.Rproj

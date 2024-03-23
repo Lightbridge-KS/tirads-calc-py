@@ -1,0 +1,12 @@
+{
+    "https://api.shinyapps.io": {
+        "server_url": "https://api.shinyapps.io",
+        "filename": "/Users/kittipos/my_app/tirads-calc-py",
+        "app_url": "https://kittipos-sir.shinyapps.io/tirads-calculator/",
+        "app_id": 11572426,
+        "app_guid": null,
+        "title": "tirads-calculator",
+        "app_mode": "python-shiny",
+        "app_store_version": 1
+    }
+}
