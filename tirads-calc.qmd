@@ -34,21 +34,6 @@ width_choices = "400px"
 ```
 
 
-<!-- {{< include tirads-q/_utils.qmd >}}
-
-
-{{< include tirads-q/_map.qmd >}}
-
-
-{{< include tirads-q/_check.qmd >}}
-
-
-{{< include tirads-q/_points_levels.qmd >}}
-
-
-{{< include tirads-q/_report.qmd >}} -->
-
-
 ::: callout-note
 ### About
 
@@ -56,7 +41,7 @@ This calculator was implemented from [ACR TI-RADS™](https://www.acr.org/Clinic
 :::
 
 ::: {.callout-tip collapse=true}
-### Expand to see TI-RADS Charts
+### Expand to see TI-RADS Chart
 
 This calculator was implemented using the following [@fig-tirads-chart] algorithm.
 
@@ -84,9 +69,19 @@ ui.input_radio_buttons(
 
 #### 🏞
 
-![**Composition** [@RadAssist]](./images/composition.png){#fig-composition width="100%"}
+![**Composition** [@RadAssist; @ACR-TIRADS-Lexicon]](./images/composition.png){#fig-composition width="100%"}
 
-- **Spongiform:** aggregation of multiple microcystic components ≥ 50% of the volume of the nodule [@ACR-TIRADS-Lexicon].
+- **Cystic or almost completely cystic (0):**
+  - *Cystic:* Entirely fluid filled.
+  - *Predominately cystic:* Composed of soft tissue components < 50% of the volume of the nodule.
+- **Spongiform (0):** aggregation of multiple microcystic components ≥ 50% of the volume of the nodule.
+- **Mixed cystic and solid (1):** Combines two features from the lexicon, predominately solid and predominately cystic. 
+  - Solid material that is eccentric and has an acute angle with the nodule’s wall is suspicious.
+- **Solid or almost completely solid (2):** 
+  - *Solid:* Composed entirely or nearly entirely of soft tissue, with only a few tiny cystic spaces.
+  - *Predominately solid:* Composed of soft tissue components ≥ 50% of the volume of the nodule.
+
+**Note:** Assign 2 points if composition cannot be determined because of calcification.
 
 :::
 
@@ -109,9 +104,11 @@ ui.input_radio_buttons(
 
 ![**Echogenicity** [@RadAssist; @RadKey-ThyroidCyst]](./images/echogenicity.png){#fig-echogenicity width="100%"}
 
-- **Hyper/iso/hypoechoic:** relative to surrounding *thyroid tissue* [@ACR-TIRADS-Lexicon].
+- **Hyper (1), iso (1), hypoechoic (2):** relative to surrounding *thyroid tissue* [@ACR-TIRADS-Lexicon].
   
-- **Very hypoechoic:** hypoechoic relative to adjacent *neck musculature* [@ACR-TIRADS-Lexicon].
+- **Very hypoechoic (3):** hypoechoic relative to adjacent *neck musculature* [@ACR-TIRADS-Lexicon].
+
+**Note:** Assign 1 point if echogenicity cannot be determined.
 
 :::
 
@@ -134,7 +131,7 @@ ui.input_radio_buttons(
 
 ![**Shape: taller-than-wide** [@ACR-TIRADS-Lexicon]](./images/shape.png){#fig-shape width="100%"}
 
-- **taller-than-wide:** ratio of `AP / horizontal diameter > 1` when measured in the transverse plane [@ACR-TIRADS-Lexicon].
+- **taller-than-wide (3):** ratio of `AP / horizontal diameter > 1`, when measured in the transverse plane [@ACR-TIRADS-Lexicon]. Highly specific of malignancy [@ACR-TIRADS-WhitePaper].
 
 :::
 
@@ -158,15 +155,17 @@ ui.input_radio_buttons(
 
 **Definition** [@ACR-TIRADS-Lexicon]
 
-- **Smooth:** uninterrupted, well-defined, curvilinear edge typically forming a spherical or elliptical shape.
+- **Smooth (0):** uninterrupted, well-defined, curvilinear edge typically forming a spherical or elliptical shape.
 
-- **Irregular margin:** spiculated, jagged, or with sharp angles with or without clear soft tissue protrusions into the parenchyma.
+- **Ill-defined (0):** border of the nodule is difficult to distinguish from thyroid parenchyma; the nodule lacks irregular or lobulated margins.
 
-- **Lobulated:** border has focal rounded soft tissue protrusions that extend into the adjacent parenchyma.
+- **Irregular margin (2):** spiculated, jagged, or with sharp angles with or without clear soft tissue protrusions into the parenchyma.
 
-- **Ill-defined:** border of the nodule is difficult to distinguish from thyroid parenchyma; the nodule lacks irregular or lobulated margins.
+- **Lobulated (2):** border has focal rounded soft tissue protrusions that extend into the adjacent parenchyma.
 
-- **Extrathyroidal extension:** nodule extends through the thyroid capsule.
+- **Extrathyroidal extension (ETE) (3):** nodule extends through the thyroid capsule.
+
+**Note:** If the margin cannot be determined for any reason, zero points should be assigned.
 
 :::
 
@@ -192,13 +191,13 @@ ui.input_checkbox_group(
 
 **Definition** [@ACR-TIRADS-Lexicon; @ACR-TIRADS-WhitePaper]
 
--   **Large comet-tail artifacts:** echogenic foci with *V-shaped echoes* > 1 mm deep to them. They are associated with colloid and are strongly indicative of benignity when found within the cystic components of thyroid nodules.
+-   **Large comet-tail artifacts (0):** echogenic foci with *V-shaped echoes* > 1 mm deep to them, a type of reverberation artifact. They are associated with colloid and are strongly indicative of benignity when found within the cystic components of thyroid nodules.
 
--   **Macrocalcifications:** coarse echogenic foci accompanied by **_acoustic shadowing_**. Published data shows a weakly positive relationship with malignancy.
+-   **Macrocalcifications (1):** coarse echogenic foci accompanied by **_acoustic shadowing_**. Published data shows a weakly positive relationship with malignancy.
 
--   **Peripheral (rim) calcifications:** lie along all or part of a nodule’s margin. Publications suggest that they are more strongly associated with malignancy than macrocalcifications. *Interrupted* peripheral calcifications qualifies as a *lobulated* margin (see [@sec-margin]).
+-   **Peripheral (rim) calcifications (2):** occupy the periphery of the nodule (complete or incomplete). More strongly associated with malignancy than macrocalcifications. *Interrupted* peripheral calcifications qualifies as a *lobulated* margin (see [@sec-margin]).
 
--   **Punctate echogenic foci:** “Dot-like” foci smaller than macrocalcifications and are **_nonshadowing_**. In the solid components of thyroid nodules, they may correspond to the psammomatous calcifications associated with papillary cancers; therefore, considered *highly suspicious*.
+-   **Punctate echogenic foci (3):** “Dot-like” foci (< 1 mm) smaller than macrocalcifications and are **_nonshadowing_**. In the solid components of thyroid nodules, they may correspond to the psammomatous calcifications associated with papillary cancers; therefore, considered *highly suspicious*.
 
 :::
 
@@ -211,7 +210,13 @@ ui.input_numeric("size_cm", None, value=None, min=0)
 ::: {.callout-tip collapse="true"}
 #### How to measure size ?
 
-The nodule should be measured using **maximal diameter** in longitudinal, AP, or transverse plane [@ACR-TIRADS-Lexicon].
+Nodules should be measured in three axes [@ACR-TIRADS-Lexicon]: 
+
+1. Maximum dimension on an axial image
+2. Maximum dimension perpendicular to the previous measurement on the same image
+3. Maximum longitudinal dimension on a sagittal image
+
+![Nodule size measurement example](./images/size-measure.jpg){#fig-size-measure width="40%" fig-align="left"}
 :::
 
 
@@ -253,3 +258,18 @@ def output_df():
 def render_md_actions():
     return ui.markdown(tirads_results().to_md_str_actions())
 ```
+
+---
+
+::: {.callout-note collapse=true appearance="default"}
+### Expand to see TI-RADS Chart
+
+![ACR TI-RADS Chart to determine TI-RADS Level and Suggestions [@ACR-TIRADS-WhitePaper]](images/tirads-chart.png){#fig-tirads-chart-2 width="100%"}
+:::
+
+
+::: {.callout-note collapse=true appearance="default"}
+### Expand to see TI-RADS Chart (Alternative)
+
+![ACR TI-RADS Alternative Chart [@ACR-TIRADS-Cat-Alt]](./images/tirads-alternative.png){#fig-tirads-alt width="100%"}
+:::

@@ -124,166 +124,6 @@ div.csl-indent {
 
 
 
-<!-- {{< include tirads-q/_utils.qmd >}}
-
-::: {#4ef0767a .cell .hidden execution_count=3}
-``` {.python .cell-code .hidden}
-tirads_map_desc = {
-    "composition": {
-        "cystic": "Cystic or almost completely cystic (0)",
-        "spongiform": "Spongiform (0)",
-        "mixed": "Mixed cystic and solid (1)",
-        "solid": "Solid or almost completely solid (2)"
-    },
-    "echogenicity": {
-        "an": "Anechoic (0)",
-        "hyper": "Hyperechoic or Isoechoic (1)",
-        "hypo": "Hypoechoic (2)",
-        "very-hypo": "Very hypoechoic (3)"
-    },
-    "shape": {
-        "wider": "Wider-than-tall (0)",
-        "taller": "Taller-than-wide (3)"
-    },
-    "margin": {
-        "smooth": "Smooth (0)",
-        "ill-defined": "Ill-defined (0)",
-        "lob-irreg": "Lobulated or Irregular (2)",
-        "extra": "Extrathyroidal extension (3)"
-    },
-    "echogenic_foci": {
-        "none-comet": "None or Large comet-tail artifacts (0)",
-        "macro-calc": "Macrocalcification (1)",
-        "rim-calc": "Rim calcification (2)",
-        "punctate": "Punctate echogenic foci (3)"
-    }
-}
-
-
-tirads_map_points = {
-    "composition": {"cystic": 0, "spongiform": 0, "mixed": 1, "solid": 2},
-    "echogenicity": {"an": 0, "hyper": 1, "iso": 1, "hypo": 2, "very-hypo": 3},
-    "shape": {"wider": 0, "taller": 3},
-    "margin": {"smooth": 0, "ill-defined": 0, "lob-irreg": 2, "extra": 3},
-    "echogenic_foci": {"none-comet": 0, "macro-calc": 1, "rim-calc": 2, "punctate": 3}
-}
-
-
-tirads_map_levels = {
-    "TR1": "Benign",
-    "TR2": "Not Suspicious",
-    "TR3": "Mildly Suspicious",
-    "TR4": "Moderately Suspicious",
-    "TR5": "Highly Suspicious"
-}
-```
-:::
-
-
-::: {#ace93496 .cell .hidden execution_count=4}
-``` {.python .cell-code .hidden}
-def args_check_tirads(composition, echogenicity, shape, margin, echogenic_foci):
-    tirads_map_categories = {
-        "composition": ["cystic", "spongiform", "mixed", "solid"],
-        "echogenicity": ["an", "hyper", "iso", "hypo", "very-hypo"],
-        "shape": ["wider", "taller"],
-        "margin": ["smooth", "ill-defined", "lob-irreg", "extra"],
-        "echogenic_foci": ["none-comet", "macro-calc", "rim-calc", "punctate"]
-    }
-    
-    # Check for "echogenic_foci"
-    if not isinstance(echogenic_foci, (list, tuple)) or not all(isinstance(item, str) for item in echogenic_foci):
-        raise TypeError("echogenic_foci must be a list or tuple of strings")
-    
-    if composition not in tirads_map_categories["composition"]:
-        raise ValueError('Invalid value for composition; must be any of "cystic", "spongiform", "mixed", "solid"')
-    if echogenicity not in tirads_map_categories["echogenicity"]:
-        raise ValueError('Invalid value for echogenicity; must be any of "an", "hyper", "iso", "hypo", "very-hypo"')
-    if shape not in tirads_map_categories["shape"]:
-        raise ValueError('Invalid value for shape; must be any of "wider", "taller"')
-    if margin not in tirads_map_categories["margin"]:
-        raise ValueError('Invalid value for margin; must be any of "smooth", "ill-defined", "lob-irreg", "extra"')
-    if not all(f in tirads_map_categories["echogenic_foci"] for f in echogenic_foci):
-        raise ValueError('Invalid value(s) in echogenic_foci; muse be in "none-comet", "macro-calc", "rim-calc", "punctate"')
-    if len(echogenic_foci) != len(set(echogenic_foci)):
-        raise ValueError("Values in echogenic_foci cannot be duplicated")
-
-```
-:::
-
-
-::: {#d76f2101 .cell .hidden execution_count=5}
-``` {.python .cell-code .hidden}
-def get_tirads_points(composition, echogenicity, shape, margin, echogenic_foci):
-
-    # Validate inputs
-    args_check_tirads(composition, echogenicity, shape, margin, echogenic_foci)
-
-    user_selections = {
-        "composition": composition,
-        "echogenicity": echogenicity,
-        "shape": shape,
-        "margin": margin,
-        "echogenic_foci": echogenic_foci  # This requires special handling due to being a list
-    }
-    
-    points = {}
-    
-    for category, selection in user_selections.items():
-        if category == "echogenic_foci": # Handle multiple selections for echogenic_foci  
-            points[category] = sum(tirads_map_points[category][s] for s in selection)
-        else:  # Handle single selections
-            points[category] = tirads_map_points[category][selection]
-
-
-    # Return result
-    return {
-        "points": points,
-        "points_tot": sum(points.values()),
-        "categories": {
-            "composition": composition,
-            "echogenicity": echogenicity,
-            "shape": shape,
-            "margin": margin,
-            "echogenic_foci": echogenic_foci
-        }
-    }
-```
-:::
-
-
-::: {#079f2fb7 .cell .hidden execution_count=6}
-``` {.python .cell-code .hidden}
-def get_tirads_levels(composition, echogenicity, shape, margin, echogenic_foci):
-    
-    # Validate inputs
-    args_check_tirads(composition, echogenicity, shape, margin, echogenic_foci)
-    
-    pt = get_tirads_points(composition, echogenicity, shape, margin, echogenic_foci)
-    
-    # TR 
-    if pt["points_tot"] >= 7:
-        tr = "TR5"
-    elif pt["points_tot"] >= 4:
-        tr = "TR4"
-    elif pt["points_tot"] == 3:
-        tr = "TR3"
-    elif pt["points_tot"] == 2 or pt["points_tot"] == 1: # 1 point is not defined in TI-RADS category, but here, I give TR2.
-        tr = "TR2"
-    elif pt["points_tot"] == 0:
-        tr = "TR1"
-    else:
-        tr = "Undefined"
-    
-    return {
-        "tr": tr, # TR
-        "desc": tirads_map_levels[tr] # Description
-    }
-```
-:::
-
-
-{{< include tirads-q/_report.qmd >}} -->
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -303,7 +143,7 @@ About
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Expand to see TI-RADS Charts
+Expand to see TI-RADS Chart
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -332,8 +172,8 @@ Figure&nbsp;1: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <spa
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div id="25c868da" class="cell" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div id="282fabc7" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="39">
 <div id="composition" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="composition-label">
   <label class="control-label" id="composition-label" for="composition">Choose one:</label>
   <div class="shiny-options-group">
@@ -349,6 +189,9 @@ Figure&nbsp;1: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <spa
     <div class="radio">
       <label><input type="radio" name="composition" value="solid"> <span>Solid or almost completely solid (2)</span></label>
     </div>
+    <div class="radio">
+      <label><input type="radio" name="composition" value="undetermined"> <span>Cannot be determined due to calcification (2)</span></label>
+    </div>
   </div>
 </div>
 </div>
@@ -361,13 +204,28 @@ Figure&nbsp;1: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <spa
 <img src="./images/composition.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="RadAssist">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>]</span>
+Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="RadAssist ACR-TIRADS-Lexicon">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>,<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>
 </figcaption>
 </figure>
 </div>
 <ul>
-<li><strong>Spongiform:</strong> aggregation of multiple microcystic components ≥ 50% of the volume of the nodule <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>.</li>
+<li><strong>Cystic or almost completely cystic (0):</strong>
+<ul>
+<li><em>Cystic:</em> Entirely fluid filled.</li>
+<li><em>Predominately cystic:</em> Composed of soft tissue components &lt; 50% of the volume of the nodule.</li>
+</ul></li>
+<li><strong>Spongiform (0):</strong> aggregation of multiple microcystic components ≥ 50% of the volume of the nodule.</li>
+<li><strong>Mixed cystic and solid (1):</strong> Combines two features from the lexicon, predominately solid and predominately cystic.
+<ul>
+<li>Solid material that is eccentric and has an acute angle with the nodule’s wall is suspicious.</li>
+</ul></li>
+<li><strong>Solid or almost completely solid (2):</strong>
+<ul>
+<li><em>Solid:</em> Composed entirely or nearly entirely of soft tissue, with only a few tiny cystic spaces.</li>
+<li><em>Predominately solid:</em> Composed of soft tissue components ≥ 50% of the volume of the nodule.</li>
+</ul></li>
 </ul>
+<p><strong>Note:</strong> Assign 2 points if composition cannot be determined because of calcification.</p>
 </div>
 </div>
 </div>
@@ -378,8 +236,8 @@ Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="R
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div id="4f1cc09d" class="cell" data-execution_count="8">
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div id="3d3087a5" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <div id="echogenicity" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="echogenicity-label">
   <label class="control-label" id="echogenicity-label" for="echogenicity">Choose one:</label>
   <div class="shiny-options-group">
@@ -394,6 +252,9 @@ Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="R
     </div>
     <div class="radio">
       <label><input type="radio" name="echogenicity" value="very-hypo"> <span>Very hypoechoic (3)</span></label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="echogenicity" value="undetermined"> <span>Can not be determined (1)</span></label>
     </div>
   </div>
 </div>
@@ -412,9 +273,10 @@ Figure&nbsp;3: <strong>Echogenicity</strong> <span class="citation" data-cites="
 </figure>
 </div>
 <ul>
-<li><p><strong>Hyper/iso/hypoechoic:</strong> relative to surrounding <em>thyroid tissue</em> <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>.</p></li>
-<li><p><strong>Very hypoechoic:</strong> hypoechoic relative to adjacent <em>neck musculature</em> <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>.</p></li>
+<li><p><strong>Hyper (1), iso (1), hypoechoic (2):</strong> relative to surrounding <em>thyroid tissue</em> <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>.</p></li>
+<li><p><strong>Very hypoechoic (3):</strong> hypoechoic relative to adjacent <em>neck musculature</em> <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>.</p></li>
 </ul>
+<p><strong>Note:</strong> Assign 1 point if echogenicity cannot be determined.</p>
 </div>
 </div>
 </div>
@@ -425,8 +287,8 @@ Figure&nbsp;3: <strong>Echogenicity</strong> <span class="citation" data-cites="
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div id="c50a7609" class="cell" data-execution_count="9">
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="53560e5e" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <div id="shape" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="shape-label">
   <label class="control-label" id="shape-label" for="shape">Choose one:</label>
   <div class="shiny-options-group">
@@ -453,7 +315,7 @@ Figure&nbsp;4: <strong>Shape: taller-than-wide</strong> <span class="citation" d
 </figure>
 </div>
 <ul>
-<li><strong>taller-than-wide:</strong> ratio of <code>AP / horizontal diameter &gt; 1</code> when measured in the transverse plane <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>.</li>
+<li><strong>taller-than-wide (3):</strong> ratio of <code>AP / horizontal diameter &gt; 1</code>, when measured in the transverse plane <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>. Highly specific of malignancy <span class="citation" data-cites="ACR-TIRADS-WhitePaper">[<a href="#ref-ACR-TIRADS-WhitePaper" role="doc-biblioref">1</a>]</span>.</li>
 </ul>
 </div>
 </div>
@@ -465,13 +327,16 @@ Figure&nbsp;4: <strong>Shape: taller-than-wide</strong> <span class="citation" d
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div id="01b14e6c" class="cell" data-execution_count="10">
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div id="6777d17d" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="42">
 <div id="margin" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="margin-label">
   <label class="control-label" id="margin-label" for="margin">Choose one:</label>
   <div class="shiny-options-group">
     <div class="radio">
-      <label><input type="radio" name="margin" value="smooth" checked="checked"> <span>Smooth (0)</span></label>
+      <label><input type="radio" name="margin" value="undetermined" checked="checked"> <span>Can not be determined (0)</span></label>
+    </div>
+    <div class="radio">
+      <label><input type="radio" name="margin" value="smooth"> <span>Smooth (0)</span></label>
     </div>
     <div class="radio">
       <label><input type="radio" name="margin" value="ill-defined"> <span>Ill-defined (0)</span></label>
@@ -500,12 +365,13 @@ Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TI
 </div>
 <p><strong>Definition</strong> <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span></p>
 <ul>
-<li><p><strong>Smooth:</strong> uninterrupted, well-defined, curvilinear edge typically forming a spherical or elliptical shape.</p></li>
-<li><p><strong>Irregular margin:</strong> spiculated, jagged, or with sharp angles with or without clear soft tissue protrusions into the parenchyma.</p></li>
-<li><p><strong>Lobulated:</strong> border has focal rounded soft tissue protrusions that extend into the adjacent parenchyma.</p></li>
-<li><p><strong>Ill-defined:</strong> border of the nodule is difficult to distinguish from thyroid parenchyma; the nodule lacks irregular or lobulated margins.</p></li>
-<li><p><strong>Extrathyroidal extension:</strong> nodule extends through the thyroid capsule.</p></li>
+<li><p><strong>Smooth (0):</strong> uninterrupted, well-defined, curvilinear edge typically forming a spherical or elliptical shape.</p></li>
+<li><p><strong>Ill-defined (0):</strong> border of the nodule is difficult to distinguish from thyroid parenchyma; the nodule lacks irregular or lobulated margins.</p></li>
+<li><p><strong>Irregular margin (2):</strong> spiculated, jagged, or with sharp angles with or without clear soft tissue protrusions into the parenchyma.</p></li>
+<li><p><strong>Lobulated (2):</strong> border has focal rounded soft tissue protrusions that extend into the adjacent parenchyma.</p></li>
+<li><p><strong>Extrathyroidal extension (ETE) (3):</strong> nodule extends through the thyroid capsule.</p></li>
 </ul>
+<p><strong>Note:</strong> If the margin cannot be determined for any reason, zero points should be assigned.</p>
 </div>
 </div>
 </div>
@@ -516,8 +382,8 @@ Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TI
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div id="bc7e6621" class="cell" data-execution_count="11">
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div id="45057045" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="43">
 <div id="echogenic_foci" style="width:400px;" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="echogenic_foci-label">
   <label class="control-label" id="echogenic_foci-label" for="echogenic_foci">Choose All That Apply</label>
   <div class="shiny-options-group">
@@ -551,10 +417,10 @@ Figure&nbsp;6: <strong>Echogenic foci</strong> <span class="citation" data-cites
 </div>
 <p><strong>Definition</strong> <span class="citation" data-cites="ACR-TIRADS-Lexicon ACR-TIRADS-WhitePaper">[<a href="#ref-ACR-TIRADS-WhitePaper" role="doc-biblioref">1</a>,<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span></p>
 <ul>
-<li><p><strong>Large comet-tail artifacts:</strong> echogenic foci with <em>V-shaped echoes</em> &gt; 1 mm deep to them. They are associated with colloid and are strongly indicative of benignity when found within the cystic components of thyroid nodules.</p></li>
-<li><p><strong>Macrocalcifications:</strong> coarse echogenic foci accompanied by <strong><em>acoustic shadowing</em></strong>. Published data shows a weakly positive relationship with malignancy.</p></li>
-<li><p><strong>Peripheral (rim) calcifications:</strong> lie along all or part of a nodule’s margin. Publications suggest that they are more strongly associated with malignancy than macrocalcifications. <em>Interrupted</em> peripheral calcifications qualifies as a <em>lobulated</em> margin (see <a href="#sec-margin" class="quarto-xref">Section&nbsp;1.4</a>).</p></li>
-<li><p><strong>Punctate echogenic foci:</strong> “Dot-like” foci smaller than macrocalcifications and are <strong><em>nonshadowing</em></strong>. In the solid components of thyroid nodules, they may correspond to the psammomatous calcifications associated with papillary cancers; therefore, considered <em>highly suspicious</em>.</p></li>
+<li><p><strong>Large comet-tail artifacts (0):</strong> echogenic foci with <em>V-shaped echoes</em> &gt; 1 mm deep to them, a type of reverberation artifact. They are associated with colloid and are strongly indicative of benignity when found within the cystic components of thyroid nodules.</p></li>
+<li><p><strong>Macrocalcifications (1):</strong> coarse echogenic foci accompanied by <strong><em>acoustic shadowing</em></strong>. Published data shows a weakly positive relationship with malignancy.</p></li>
+<li><p><strong>Peripheral (rim) calcifications (2):</strong> occupy the periphery of the nodule (complete or incomplete). More strongly associated with malignancy than macrocalcifications. <em>Interrupted</em> peripheral calcifications qualifies as a <em>lobulated</em> margin (see <a href="#sec-margin" class="quarto-xref">Section&nbsp;1.4</a>).</p></li>
+<li><p><strong>Punctate echogenic foci (3):</strong> “Dot-like” foci (&lt; 1 mm) smaller than macrocalcifications and are <strong><em>nonshadowing</em></strong>. In the solid components of thyroid nodules, they may correspond to the psammomatous calcifications associated with papillary cancers; therefore, considered <em>highly suspicious</em>.</p></li>
 </ul>
 </div>
 </div>
@@ -562,8 +428,8 @@ Figure&nbsp;6: <strong>Echogenic foci</strong> <span class="citation" data-cites
 </section>
 <section id="size-cm" class="level3">
 <h3 class="anchored" data-anchor-id="size-cm">Size (cm)</h3>
-<div id="841135f8" class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div id="4dfe9874" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="44">
 <div class="form-group shiny-input-container">
   <label class="control-label shiny-label-null" id="size_cm-label" for="size_cm"></label><input id="size_cm" type="number" class="shiny-input-number form-control" min="0">
 </div>
@@ -581,7 +447,22 @@ How to measure size ?
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The nodule should be measured using <strong>maximal diameter</strong> in longitudinal, AP, or transverse plane <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>.</p>
+<p>Nodules should be measured in three axes <span class="citation" data-cites="ACR-TIRADS-Lexicon">[<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>:</p>
+<ol type="1">
+<li>Maximum dimension on an axial image</li>
+<li>Maximum dimension perpendicular to the previous measurement on the same image</li>
+<li>Maximum longitudinal dimension on a sagittal image</li>
+</ol>
+<div id="fig-size-measure" class="quarto-figure quarto-figure-left quarto-float anchored" data-fig-align="left">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-size-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/size-measure.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-size-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Nodule size measurement example
+</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
@@ -589,20 +470,71 @@ How to measure size ?
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<div id="d9a503a9" class="cell" data-execution_count="14">
+<div id="132ad184" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display no-overflow-x">
 <div class="shiny-html-output" id="render_md_summary"></div>
 </div>
 </div>
-<div id="e1aa906c" class="cell" data-execution_count="15">
+<div id="2a7d57e2" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <shiny-data-frame id="output_df" class="html-fill-item html-fill-container"></shiny-data-frame><script type="application/json" data-html-dependency="">{"name": "shiny-data-frame-output", "version": "0.8.1", "source": {"package": "shiny", "subdir": "www/shared/py-shiny/dataframe"}, "script": [{"src": "dataframe.js", "type": "module"}], "stylesheet": [], "meta": [], "all_files": false, "head": null}</script>
 <script type="application/json" data-html-dependency="">{"name": "htmltools-fill", "version": "0.5.7", "source": {"package": "shiny", "subdir": "www/shared/htmltools/fill"}, "script": [], "stylesheet": [{"href": "fill.css", "rel": "stylesheet"}], "meta": [], "all_files": false, "head": null}</script>
 </div>
 </div>
-<div id="7c4fd815" class="cell" data-execution_count="16">
+<div id="0a7dc8e7" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display no-overflow-x">
 <div class="shiny-html-output" id="render_md_actions"></div>
+</div>
+</div>
+<hr>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand to see TI-RADS Chart
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="fig-tirads-chart-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tirads-chart-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tirads-chart.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tirads-chart-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <span class="citation" data-cites="ACR-TIRADS-WhitePaper">[<a href="#ref-ACR-TIRADS-WhitePaper" role="doc-biblioref">1</a>]</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Expand to see TI-RADS Chart (Alternative)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div id="fig-tirads-alt" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tirads-alt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/tirads-alternative.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tirads-alt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: ACR TI-RADS Alternative Chart <span class="citation" data-cites="ACR-TIRADS-Cat-Alt">[<a href="#ref-ACR-TIRADS-Cat-Alt" role="doc-biblioref">6</a>]</span>
+</figcaption>
+</figure>
+</div>
+</div>
 </div>
 </div>
 
@@ -623,6 +555,9 @@ How to measure size ?
 </div>
 <div id="ref-ACR-TIRADS-UserGuide" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[5] </div><div class="csl-right-inline">F.N. Tessler, W.D. Middleton, E.G. Grant, Thyroid imaging reporting and data system (TI-RADS): A user’s guide, Radiology. 287 (2018) 29–36. https://doi.org/<a href="https://doi.org/10.1148/radiol.2017171240">10.1148/radiol.2017171240</a>.</div>
+</div>
+<div id="ref-ACR-TIRADS-Cat-Alt" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">ACR TI-RADS assessment categories (alternative chart), (n.d.). <a href="https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/TI-RADS-Alternative-chart.pdf">https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/TI-RADS-Alternative-chart.pdf</a>.</div>
 </div>
 </div></section></div></main>
 <!-- /main column -->

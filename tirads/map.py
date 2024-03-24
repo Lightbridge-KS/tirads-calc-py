@@ -5,19 +5,22 @@ tirads_map_desc = {
         "cystic": "Cystic or almost completely cystic (0)",
         "spongiform": "Spongiform (0)",
         "mixed": "Mixed cystic and solid (1)",
-        "solid": "Solid or almost completely solid (2)"
+        "solid": "Solid or almost completely solid (2)",
+        "undetermined": "Cannot be determined due to calcification (2)"
     },
     "echogenicity": {
         "an": "Anechoic (0)",
         "hyper": "Hyperechoic or Isoechoic (1)",
         "hypo": "Hypoechoic (2)",
-        "very-hypo": "Very hypoechoic (3)"
+        "very-hypo": "Very hypoechoic (3)",
+        "undetermined": "Can not be determined (1)"
     },
     "shape": {
         "wider": "Wider-than-tall (0)",
         "taller": "Taller-than-wide (3)"
     },
     "margin": {
+        "undetermined": "Can not be determined (0)",
         "smooth": "Smooth (0)",
         "ill-defined": "Ill-defined (0)",
         "lob-irreg": "Lobulated or Irregular (2)",
@@ -33,10 +36,10 @@ tirads_map_desc = {
 
 
 tirads_map_points = {
-    "composition": {"cystic": 0, "spongiform": 0, "mixed": 1, "solid": 2},
-    "echogenicity": {"an": 0, "hyper": 1, "iso": 1, "hypo": 2, "very-hypo": 3},
+    "composition": {"cystic": 0, "spongiform": 0, "mixed": 1, "solid": 2, "undetermined": 2},
+    "echogenicity": {"an": 0, "hyper": 1, "iso": 1, "hypo": 2, "very-hypo": 3, "undetermined": 1},
     "shape": {"wider": 0, "taller": 3},
-    "margin": {"smooth": 0, "ill-defined": 0, "lob-irreg": 2, "extra": 3},
+    "margin": {"undetermined": 0, "smooth": 0, "ill-defined": 0, "lob-irreg": 2, "extra": 3},
     "echogenic_foci": {"none-comet": 0, "macro-calc": 1, "rim-calc": 2, "punctate": 3}
 }
 
