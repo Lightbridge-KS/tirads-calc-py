@@ -11,3 +11,27 @@
 ---
 
 - Using [Shiny for Python](https://shiny.posit.co/py/) framework integrated with [Quarto document](https://quarto.org)
+
+## Dev Notes
+
+### Render & Run
+
+**Render Quarto:**
+
+```zsh
+quarto render tirads-calc.qmd 
+```
+
+**Test Run:**
+
+```zsh
+shiny run app.py
+```
+
+### Deploy
+
+To shinyapp.io
+
+```zsh
+rsconnect deploy shiny . --title tirads-calculator
+```

@@ -108,7 +108,7 @@ def server(input: Inputs, output: Outputs, session: Session) -> None:
     return None
 
 
-_static_assets = ["tirads-calc_files","images/tirads-chart.png","images/composition.png","images/echogenicity.png","images/shape.png","images/margin.png","images/echogenic-foci.png","images/cover.png","images/favicon/apple-touch-icon.png","images/favicon/favicon-32x32.png","images/favicon/favicon-16x16.png","images/favicon/site.webmanifest","css/style.css"]
+_static_assets = ["tirads-calc_files","images/tirads-chart.png","images/composition.png","images/echogenicity.png","images/shape.png","images/margin.png","images/echogenic-foci.png","images/cover.png","tirads-calc_files/libs/quarto-html/tippy.css","tirads-calc_files/libs/quarto-html/quarto-syntax-highlighting.css","tirads-calc_files/libs/bootstrap/bootstrap-icons.css","tirads-calc_files/libs/bootstrap/bootstrap.min.css","images/favicon/apple-touch-icon.png","images/favicon/favicon-32x32.png","images/favicon/favicon-16x16.png","images/favicon/site.webmanifest","css/style.css","tirads-calc_files/libs/clipboard/clipboard.min.js","tirads-calc_files/libs/quarto-html/quarto.js","tirads-calc_files/libs/quarto-html/popper.min.js","tirads-calc_files/libs/quarto-html/tippy.umd.min.js","tirads-calc_files/libs/quarto-html/anchor.min.js","tirads-calc_files/libs/bootstrap/bootstrap.min.js"]
 _static_assets = {"/" + sa: Path(__file__).parent / sa for sa in _static_assets}
 
 app = App(

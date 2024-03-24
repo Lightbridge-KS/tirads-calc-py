@@ -126,7 +126,7 @@ div.csl-indent {
 
 <!-- {{< include tirads-q/_utils.qmd >}}
 
-::: {#4d480dc7 .cell .hidden execution_count=3}
+::: {#4ef0767a .cell .hidden execution_count=3}
 ``` {.python .cell-code .hidden}
 tirads_map_desc = {
     "composition": {
@@ -180,7 +180,7 @@ tirads_map_levels = {
 :::
 
 
-::: {#7223da01 .cell .hidden execution_count=4}
+::: {#ace93496 .cell .hidden execution_count=4}
 ``` {.python .cell-code .hidden}
 def args_check_tirads(composition, echogenicity, shape, margin, echogenic_foci):
     tirads_map_categories = {
@@ -212,7 +212,7 @@ def args_check_tirads(composition, echogenicity, shape, margin, echogenic_foci):
 :::
 
 
-::: {#d068844e .cell .hidden execution_count=5}
+::: {#d76f2101 .cell .hidden execution_count=5}
 ``` {.python .cell-code .hidden}
 def get_tirads_points(composition, echogenicity, shape, margin, echogenic_foci):
 
@@ -252,7 +252,7 @@ def get_tirads_points(composition, echogenicity, shape, margin, echogenic_foci):
 :::
 
 
-::: {#d14f6ac5 .cell .hidden execution_count=6}
+::: {#079f2fb7 .cell .hidden execution_count=6}
 ``` {.python .cell-code .hidden}
 def get_tirads_levels(composition, echogenicity, shape, margin, echogenic_foci):
     
@@ -332,7 +332,7 @@ Figure&nbsp;1: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <spa
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div id="fe4b33ab" class="cell" data-execution_count="7">
+<div id="25c868da" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div id="composition" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="composition-label">
   <label class="control-label" id="composition-label" for="composition">Choose one:</label>
@@ -378,7 +378,7 @@ Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="R
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div id="b59d9bf7" class="cell" data-execution_count="8">
+<div id="4f1cc09d" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div id="echogenicity" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="echogenicity-label">
   <label class="control-label" id="echogenicity-label" for="echogenicity">Choose one:</label>
@@ -425,7 +425,7 @@ Figure&nbsp;3: <strong>Echogenicity</strong> <span class="citation" data-cites="
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div id="702a1ef7" class="cell" data-execution_count="9">
+<div id="c50a7609" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div id="shape" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="shape-label">
   <label class="control-label" id="shape-label" for="shape">Choose one:</label>
@@ -465,7 +465,7 @@ Figure&nbsp;4: <strong>Shape: taller-than-wide</strong> <span class="citation" d
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div id="8125e8cb" class="cell" data-execution_count="10">
+<div id="01b14e6c" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div id="margin" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="margin-label">
   <label class="control-label" id="margin-label" for="margin">Choose one:</label>
@@ -516,7 +516,7 @@ Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TI
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div id="ee85ea6a" class="cell" data-execution_count="11">
+<div id="bc7e6621" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div id="echogenic_foci" style="width:400px;" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="echogenic_foci-label">
   <label class="control-label" id="echogenic_foci-label" for="echogenic_foci">Choose All That Apply</label>
@@ -562,7 +562,7 @@ Figure&nbsp;6: <strong>Echogenic foci</strong> <span class="citation" data-cites
 </section>
 <section id="size-cm" class="level3">
 <h3 class="anchored" data-anchor-id="size-cm">Size (cm)</h3>
-<div id="0883bce8" class="cell" data-execution_count="12">
+<div id="841135f8" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div class="form-group shiny-input-container">
   <label class="control-label shiny-label-null" id="size_cm-label" for="size_cm"></label><input id="size_cm" type="number" class="shiny-input-number form-control" min="0">
@@ -589,18 +589,18 @@ How to measure size ?
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<div id="cfe7b175" class="cell" data-execution_count="14">
+<div id="d9a503a9" class="cell" data-execution_count="14">
 <div class="cell-output cell-output-display no-overflow-x">
 <div class="shiny-html-output" id="render_md_summary"></div>
 </div>
 </div>
-<div id="ab90100a" class="cell" data-execution_count="15">
+<div id="e1aa906c" class="cell" data-execution_count="15">
 <div class="cell-output cell-output-display">
 <shiny-data-frame id="output_df" class="html-fill-item html-fill-container"></shiny-data-frame><script type="application/json" data-html-dependency="">{"name": "shiny-data-frame-output", "version": "0.8.1", "source": {"package": "shiny", "subdir": "www/shared/py-shiny/dataframe"}, "script": [{"src": "dataframe.js", "type": "module"}], "stylesheet": [], "meta": [], "all_files": false, "head": null}</script>
 <script type="application/json" data-html-dependency="">{"name": "htmltools-fill", "version": "0.5.7", "source": {"package": "shiny", "subdir": "www/shared/htmltools/fill"}, "script": [], "stylesheet": [{"href": "fill.css", "rel": "stylesheet"}], "meta": [], "all_files": false, "head": null}</script>
 </div>
 </div>
-<div id="1f722776" class="cell" data-execution_count="16">
+<div id="7c4fd815" class="cell" data-execution_count="16">
 <div class="cell-output cell-output-display no-overflow-x">
 <div class="shiny-html-output" id="render_md_actions"></div>
 </div>
