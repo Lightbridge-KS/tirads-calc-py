@@ -131,7 +131,7 @@ ui.input_radio_buttons(
 
 #### 🏞
 
-![**Shape: taller-than-wide** [@ACR-TIRADS-Lexicon]](./images/shape.png){#fig-shape width="100%"}
+![**Shape: taller-than-wide** [@ACR-TIRADS-Lexicon]](./images/shape-w-text.png){#fig-shape width="100%"}
 
 - **taller-than-wide (3):** ratio of `AP / horizontal diameter > 1`, when measured in the transverse plane [@ACR-TIRADS-Lexicon]. Highly specific of malignancy [@ACR-TIRADS-WhitePaper].
 
