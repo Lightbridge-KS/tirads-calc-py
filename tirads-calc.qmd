@@ -69,17 +69,19 @@ ui.input_radio_buttons(
 
 #### 🏞
 
-![**Composition** [@RadAssist; @ACR-TIRADS-Lexicon]](./images/composition.png){#fig-composition width="100%"}
+![**Composition** [@RadAssist; @ACR-TIRADS-Lexicon]](./images/composition-w-text.png){#fig-composition width="100%"}
 
 - **Cystic or almost completely cystic (0):**
   - *Cystic:* Entirely fluid filled.
   - *Predominately cystic:* Composed of soft tissue components < 50% of the volume of the nodule.
-- **Spongiform (0):** aggregation of multiple microcystic components ≥ 50% of the volume of the nodule.
+- **Spongiform (0):** aggregation of multiple microcystic components ≥ 50% of the volume of the nodule (akin to the fluid-filled spaces in a wet sponge [@ACR-TIRADS-UserGuide]).
 - **Mixed cystic and solid (1):** Combines two features from the lexicon, predominately solid and predominately cystic. 
-  - Solid material that is eccentric and has an acute angle with the nodule’s wall is suspicious.
+  - **High risk feature:** Solid material that is eccentric and has an acute angle with the nodule’s wall is suspicious.
+  - Base all other lexicon nodule characteristics on the solid component.
 - **Solid or almost completely solid (2):** 
-  - *Solid:* Composed entirely or nearly entirely of soft tissue, with only a few tiny cystic spaces.
+  - *Solid:* Composed entirely or nearly entirely of soft tissue, with only a few tiny cystic spaces (< 5%).
   - *Predominately solid:* Composed of soft tissue components ≥ 50% of the volume of the nodule.
+
 
 **Note:** Assign 2 points if composition cannot be determined because of calcification.
 
@@ -102,7 +104,7 @@ ui.input_radio_buttons(
 
 #### 🏞
 
-![**Echogenicity** [@RadAssist; @RadKey-ThyroidCyst]](./images/echogenicity.png){#fig-echogenicity width="100%"}
+![**Echogenicity** [@RadAssist; @RadKey-ThyroidCyst]](./images/echogenicity-w-text.png){#fig-echogenicity width="100%"}
 
 - **Hyper (1), iso (1), hypoechoic (2):** relative to surrounding *thyroid tissue* [@ACR-TIRADS-Lexicon].
   
@@ -151,7 +153,7 @@ ui.input_radio_buttons(
 
 #### 🏞
 
-![**Margin** [@ACR-TIRADS-Lexicon; @ACR-TIRADS-UserGuide; @RadAssist]](./images/margin.png){#fig-margin width="100%"} 
+![**Margin** [@ACR-TIRADS-Lexicon; @ACR-TIRADS-UserGuide; @RadAssist]](./images/margin-w-text.png){#fig-margin width="100%"} 
 
 **Definition** [@ACR-TIRADS-Lexicon]
 
@@ -163,7 +165,9 @@ ui.input_radio_buttons(
 
 - **Lobulated (2):** border has focal rounded soft tissue protrusions that extend into the adjacent parenchyma.
 
-- **Extrathyroidal extension (ETE) (3):** nodule extends through the thyroid capsule.
+- **Extrathyroidal extension (ETE) (3):** nodule extends through the thyroid capsule, a highly reliable sign of malignancy and is an unfavorable prognostic sign.
+
+![**Extrathyroidal extension (ETE)** [@ACR-TIRADS-Atlas]](./images/margin-ete.png){#fig-margin-ete width="70%"}
 
 **Note:** If the margin cannot be determined for any reason, zero points should be assigned.
 
@@ -187,7 +191,7 @@ ui.input_checkbox_group(
 
 #### 🏞
 
-![**Echogenic foci** [@ACR-TIRADS-Lexicon; @RadAssist]](./images/echogenic-foci.png){#fig-echogenic-foci width="100%"}
+![**Echogenic foci** [@ACR-TIRADS-Lexicon; @RadAssist]](./images/echogenic-foci-w-text.png){#fig-echogenic-foci width="100%"}
 
 **Definition** [@ACR-TIRADS-Lexicon; @ACR-TIRADS-WhitePaper]
 

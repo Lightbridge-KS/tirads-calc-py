@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kittipos Sirivongrungson">
-<meta name="dcterms.date" content="2024-03-24">
+<meta name="dcterms.date" content="2024-03-31">
 
 <title>ACR TI-RADS Calculator</title>
 <style>
@@ -91,7 +91,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 24, 2024</p>
+        <p class="date">March 31, 2024</p>
       </div>
     </div>
     
@@ -172,8 +172,8 @@ Figure&nbsp;1: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <spa
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<div id="282fabc7" class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div id="f451f4b5" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <div id="composition" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="composition-label">
   <label class="control-label" id="composition-label" for="composition">Choose one:</label>
   <div class="shiny-options-group">
@@ -201,7 +201,7 @@ Figure&nbsp;1: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <spa
 <div id="fig-composition" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/composition.png" class="img-fluid figure-img" style="width:100.0%">
+<img src="./images/composition-w-text.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-composition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="RadAssist ACR-TIRADS-Lexicon">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>,<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>
@@ -214,14 +214,15 @@ Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="R
 <li><em>Cystic:</em> Entirely fluid filled.</li>
 <li><em>Predominately cystic:</em> Composed of soft tissue components &lt; 50% of the volume of the nodule.</li>
 </ul></li>
-<li><strong>Spongiform (0):</strong> aggregation of multiple microcystic components ≥ 50% of the volume of the nodule.</li>
+<li><strong>Spongiform (0):</strong> aggregation of multiple microcystic components ≥ 50% of the volume of the nodule (akin to the fluid-filled spaces in a wet sponge <span class="citation" data-cites="ACR-TIRADS-UserGuide">[<a href="#ref-ACR-TIRADS-UserGuide" role="doc-biblioref">4</a>]</span>).</li>
 <li><strong>Mixed cystic and solid (1):</strong> Combines two features from the lexicon, predominately solid and predominately cystic.
 <ul>
-<li>Solid material that is eccentric and has an acute angle with the nodule’s wall is suspicious.</li>
+<li><strong>High risk feature:</strong> Solid material that is eccentric and has an acute angle with the nodule’s wall is suspicious.</li>
+<li>Base all other lexicon nodule characteristics on the solid component.</li>
 </ul></li>
 <li><strong>Solid or almost completely solid (2):</strong>
 <ul>
-<li><em>Solid:</em> Composed entirely or nearly entirely of soft tissue, with only a few tiny cystic spaces.</li>
+<li><em>Solid:</em> Composed entirely or nearly entirely of soft tissue, with only a few tiny cystic spaces (&lt; 5%).</li>
 <li><em>Predominately solid:</em> Composed of soft tissue components ≥ 50% of the volume of the nodule.</li>
 </ul></li>
 </ul>
@@ -236,8 +237,8 @@ Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="R
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div id="3d3087a5" class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div id="2e809501" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="16">
 <div id="echogenicity" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="echogenicity-label">
   <label class="control-label" id="echogenicity-label" for="echogenicity">Choose one:</label>
   <div class="shiny-options-group">
@@ -265,10 +266,10 @@ Figure&nbsp;2: <strong>Composition</strong> <span class="citation" data-cites="R
 <div id="fig-echogenicity" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-echogenicity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/echogenicity.png" class="img-fluid figure-img" style="width:100.0%">
+<img src="./images/echogenicity-w-text.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-echogenicity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: <strong>Echogenicity</strong> <span class="citation" data-cites="RadAssist RadKey-ThyroidCyst">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>,<a href="#ref-RadKey-ThyroidCyst" role="doc-biblioref">4</a>]</span>
+Figure&nbsp;3: <strong>Echogenicity</strong> <span class="citation" data-cites="RadAssist RadKey-ThyroidCyst">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>,<a href="#ref-RadKey-ThyroidCyst" role="doc-biblioref">5</a>]</span>
 </figcaption>
 </figure>
 </div>
@@ -287,8 +288,8 @@ Figure&nbsp;3: <strong>Echogenicity</strong> <span class="citation" data-cites="
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div id="53560e5e" class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="41">
+<div id="81fb24f4" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <div id="shape" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="shape-label">
   <label class="control-label" id="shape-label" for="shape">Choose one:</label>
   <div class="shiny-options-group">
@@ -327,8 +328,8 @@ Figure&nbsp;4: <strong>Shape: taller-than-wide</strong> <span class="citation" d
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div id="6777d17d" class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div id="39abd235" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <div id="margin" style="width:400px;" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="margin-label">
   <label class="control-label" id="margin-label" for="margin">Choose one:</label>
   <div class="shiny-options-group">
@@ -356,10 +357,10 @@ Figure&nbsp;4: <strong>Shape: taller-than-wide</strong> <span class="citation" d
 <div id="fig-margin" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-margin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/margin.png" class="img-fluid figure-img" style="width:100.0%">
+<img src="./images/margin-w-text.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-margin-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TIRADS-Lexicon ACR-TIRADS-UserGuide RadAssist">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>,<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>,<a href="#ref-ACR-TIRADS-UserGuide" role="doc-biblioref">5</a>]</span>
+Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TIRADS-Lexicon ACR-TIRADS-UserGuide RadAssist">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>–<a href="#ref-ACR-TIRADS-UserGuide" role="doc-biblioref">4</a>]</span>
 </figcaption>
 </figure>
 </div>
@@ -369,8 +370,18 @@ Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TI
 <li><p><strong>Ill-defined (0):</strong> border of the nodule is difficult to distinguish from thyroid parenchyma; the nodule lacks irregular or lobulated margins.</p></li>
 <li><p><strong>Irregular margin (2):</strong> spiculated, jagged, or with sharp angles with or without clear soft tissue protrusions into the parenchyma.</p></li>
 <li><p><strong>Lobulated (2):</strong> border has focal rounded soft tissue protrusions that extend into the adjacent parenchyma.</p></li>
-<li><p><strong>Extrathyroidal extension (ETE) (3):</strong> nodule extends through the thyroid capsule.</p></li>
+<li><p><strong>Extrathyroidal extension (ETE) (3):</strong> nodule extends through the thyroid capsule, a highly reliable sign of malignancy and is an unfavorable prognostic sign.</p></li>
 </ul>
+<div id="fig-margin-ete" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-margin-ete-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./images/margin-ete.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-margin-ete-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: <strong>Extrathyroidal extension (ETE)</strong> <span class="citation" data-cites="ACR-TIRADS-Atlas">[<a href="#ref-ACR-TIRADS-Atlas" role="doc-biblioref">6</a>]</span>
+</figcaption>
+</figure>
+</div>
 <p><strong>Note:</strong> If the margin cannot be determined for any reason, zero points should be assigned.</p>
 </div>
 </div>
@@ -382,8 +393,8 @@ Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TI
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">✅</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">🏞</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<div id="45057045" class="cell" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div id="4e376c72" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <div id="echogenic_foci" style="width:400px;" class="form-group shiny-input-checkboxgroup shiny-input-container" role="group" aria-labelledby="echogenic_foci-label">
   <label class="control-label" id="echogenic_foci-label" for="echogenic_foci">Choose All That Apply</label>
   <div class="shiny-options-group">
@@ -408,10 +419,10 @@ Figure&nbsp;5: <strong>Margin</strong> <span class="citation" data-cites="ACR-TI
 <div id="fig-echogenic-foci" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-echogenic-foci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="./images/echogenic-foci.png" class="img-fluid figure-img" style="width:100.0%">
+<img src="./images/echogenic-foci-w-text.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-echogenic-foci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: <strong>Echogenic foci</strong> <span class="citation" data-cites="ACR-TIRADS-Lexicon RadAssist">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>,<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>
+Figure&nbsp;7: <strong>Echogenic foci</strong> <span class="citation" data-cites="ACR-TIRADS-Lexicon RadAssist">[<a href="#ref-RadAssist" role="doc-biblioref">2</a>,<a href="#ref-ACR-TIRADS-Lexicon" role="doc-biblioref">3</a>]</span>
 </figcaption>
 </figure>
 </div>
@@ -428,8 +439,8 @@ Figure&nbsp;6: <strong>Echogenic foci</strong> <span class="citation" data-cites
 </section>
 <section id="size-cm" class="level3">
 <h3 class="anchored" data-anchor-id="size-cm">Size (cm)</h3>
-<div id="4dfe9874" class="cell" data-execution_count="8">
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div id="ff54f23b" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <div class="form-group shiny-input-container">
   <label class="control-label shiny-label-null" id="size_cm-label" for="size_cm"></label><input id="size_cm" type="number" class="shiny-input-number form-control" min="0">
 </div>
@@ -459,7 +470,7 @@ How to measure size ?
 <img src="./images/size-measure.jpg" class="img-fluid quarto-figure quarto-figure-left figure-img" style="width:40.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-size-measure-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7: Nodule size measurement example
+Figure&nbsp;8: Nodule size measurement example
 </figcaption>
 </figure>
 </div>
@@ -470,18 +481,18 @@ Figure&nbsp;7: Nodule size measurement example
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
-<div id="132ad184" class="cell" data-execution_count="10">
+<div id="bf37e6e4" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display no-overflow-x">
 <div class="shiny-html-output" id="render_md_summary"></div>
 </div>
 </div>
-<div id="2a7d57e2" class="cell" data-execution_count="11">
+<div id="90574d36" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <shiny-data-frame id="output_df" class="html-fill-item html-fill-container"></shiny-data-frame><script type="application/json" data-html-dependency="">{"name": "shiny-data-frame-output", "version": "0.8.1", "source": {"package": "shiny", "subdir": "www/shared/py-shiny/dataframe"}, "script": [{"src": "dataframe.js", "type": "module"}], "stylesheet": [], "meta": [], "all_files": false, "head": null}</script>
 <script type="application/json" data-html-dependency="">{"name": "htmltools-fill", "version": "0.5.7", "source": {"package": "shiny", "subdir": "www/shared/htmltools/fill"}, "script": [], "stylesheet": [{"href": "fill.css", "rel": "stylesheet"}], "meta": [], "all_files": false, "head": null}</script>
 </div>
 </div>
-<div id="0a7dc8e7" class="cell" data-execution_count="12">
+<div id="d64677d6" class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display no-overflow-x">
 <div class="shiny-html-output" id="render_md_actions"></div>
 </div>
@@ -505,7 +516,7 @@ Expand to see TI-RADS Chart
 <img src="images/tirads-chart.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tirads-chart-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <span class="citation" data-cites="ACR-TIRADS-WhitePaper">[<a href="#ref-ACR-TIRADS-WhitePaper" role="doc-biblioref">1</a>]</span>
+Figure&nbsp;9: ACR TI-RADS Chart to determine TI-RADS Level and Suggestions <span class="citation" data-cites="ACR-TIRADS-WhitePaper">[<a href="#ref-ACR-TIRADS-WhitePaper" role="doc-biblioref">1</a>]</span>
 </figcaption>
 </figure>
 </div>
@@ -530,7 +541,7 @@ Expand to see TI-RADS Chart (Alternative)
 <img src="./images/tirads-alternative.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tirads-alt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9: ACR TI-RADS Alternative Chart <span class="citation" data-cites="ACR-TIRADS-Cat-Alt">[<a href="#ref-ACR-TIRADS-Cat-Alt" role="doc-biblioref">6</a>]</span>
+Figure&nbsp;10: ACR TI-RADS Alternative Chart <span class="citation" data-cites="ACR-TIRADS-Cat-Alt">[<a href="#ref-ACR-TIRADS-Cat-Alt" role="doc-biblioref">7</a>]</span>
 </figcaption>
 </figure>
 </div>
@@ -550,14 +561,17 @@ Figure&nbsp;9: ACR TI-RADS Alternative Chart <span class="citation" data-cites="
 <div id="ref-ACR-TIRADS-Lexicon" class="csl-entry" role="listitem">
 <div class="csl-left-margin">[3] </div><div class="csl-right-inline">E.G. Grant, F.N. Tessler, J.K. Hoang, J.E. Langer, M.D. Beland, L.L. Berland, J.J. Cronan, T.S. Desser, M.C. Frates, U.M. Hamper, W.D. Middleton, C.C. Reading, L.M. Scoutt, A.T. Stavros, S.A. Teefey, Thyroid ultrasound reporting lexicon: White paper of the ACR thyroid imaging, reporting and data system (TIRADS) committee, Journal of the American College of Radiology: JACR. 12 (2015) 1272–1279. https://doi.org/<a href="https://doi.org/10.1016/j.jacr.2015.07.011">10.1016/j.jacr.2015.07.011</a>.</div>
 </div>
-<div id="ref-RadKey-ThyroidCyst" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[4] </div><div class="csl-right-inline">Z. Fryšák, Radiology key: Thyroid cysts, (2017). <a href="https://radiologykey.com/thyroid-cysts">https://radiologykey.com/thyroid-cysts</a>.</div>
-</div>
 <div id="ref-ACR-TIRADS-UserGuide" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[5] </div><div class="csl-right-inline">F.N. Tessler, W.D. Middleton, E.G. Grant, Thyroid imaging reporting and data system (TI-RADS): A user’s guide, Radiology. 287 (2018) 29–36. https://doi.org/<a href="https://doi.org/10.1148/radiol.2017171240">10.1148/radiol.2017171240</a>.</div>
+<div class="csl-left-margin">[4] </div><div class="csl-right-inline">F.N. Tessler, W.D. Middleton, E.G. Grant, Thyroid imaging reporting and data system (TI-RADS): A user’s guide, Radiology. 287 (2018) 29–36. https://doi.org/<a href="https://doi.org/10.1148/radiol.2017171240">10.1148/radiol.2017171240</a>.</div>
+</div>
+<div id="ref-RadKey-ThyroidCyst" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[5] </div><div class="csl-right-inline">Z. Fryšák, Radiology key: Thyroid cysts, (2017). <a href="https://radiologykey.com/thyroid-cysts">https://radiologykey.com/thyroid-cysts</a>.</div>
+</div>
+<div id="ref-ACR-TIRADS-Atlas" class="csl-entry" role="listitem">
+<div class="csl-left-margin">[6] </div><div class="csl-right-inline">ACR TI-RADS atlas, (n.d.). <a href="https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/ACR-TI-RADS-Atlas.pdf">https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/ACR-TI-RADS-Atlas.pdf</a>.</div>
 </div>
 <div id="ref-ACR-TIRADS-Cat-Alt" class="csl-entry" role="listitem">
-<div class="csl-left-margin">[6] </div><div class="csl-right-inline">ACR TI-RADS assessment categories (alternative chart), (n.d.). <a href="https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/TI-RADS-Alternative-chart.pdf">https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/TI-RADS-Alternative-chart.pdf</a>.</div>
+<div class="csl-left-margin">[7] </div><div class="csl-right-inline">ACR TI-RADS assessment categories (alternative chart), (n.d.). <a href="https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/TI-RADS-Alternative-chart.pdf">https://www.acr.org/-/media/ACR/Files/RADS/TI-RADS/TI-RADS-Alternative-chart.pdf</a>.</div>
 </div>
 </div></section></div></main>
 <!-- /main column -->
